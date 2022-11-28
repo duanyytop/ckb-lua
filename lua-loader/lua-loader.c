@@ -521,3 +521,17 @@ __attribute__((visibility("default"))) void lua_toggle_exit(void *L,
     }
     s_lua_exit_enabled = enabled;
 }
+
+__attribute__((visibility("default"))) int run_lua_code(const uint8_t *code, uint32_t code_size) {
+    const size_t mem_size = 1024 * 512;
+    uint8_t mem[mem_size];
+
+    void* l = lua_create_instance((uintptr_t)mem, (uintptr_t)(mem + mem_size));
+    int ret = lua_run_code(l, (const char*)code, (size_t)code_size, "lua");
+    if (ret != 0) {
+        return ret;
+    }
+    lua_close_instance(l);
+    
+    return 0;
+}
