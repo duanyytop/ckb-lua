@@ -1,7 +1,3 @@
 {
-  lua_create_instance;
-  lua_run_code;
-  lua_close_instance;
-  lua_toggle_exit;
   run_lua_code;
 };

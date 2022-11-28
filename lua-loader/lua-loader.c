@@ -482,8 +482,7 @@ int main(int argc, char **argv) {
 // note that, creating new lua state requries malloc, thus we configure the
 // memory on initializing lua stete instead of adding a separate function to
 // configure memory bounds after creation.
-__attribute__((visibility("default"))) void *lua_create_instance(
-    uintptr_t min, uintptr_t max) {
+void *lua_create_instance(uintptr_t min, uintptr_t max) {
     malloc_config(min, max);
     lua_State *L = luaL_newstate(); /* create state */
     if (L == NULL) {
@@ -495,10 +494,7 @@ __attribute__((visibility("default"))) void *lua_create_instance(
     return (void *)L;
 }
 
-__attribute__((visibility("default"))) int lua_run_code(void *l,
-                                                        const char *code,
-                                                        size_t code_size,
-                                                        char *name) {
+int lua_run_code(void *l, const char *code, size_t code_size, char *name) {
     lua_State *L = l;
     if (L == NULL) {
         ckb_exit(LUA_ERROR_INVALID_STATE);
@@ -507,15 +503,14 @@ __attribute__((visibility("default"))) int lua_run_code(void *l,
     return status;
 }
 
-__attribute__((visibility("default"))) void lua_close_instance(void *L) {
+void lua_close_instance(void *L) {
     if (L == NULL) {
         ckb_exit(LUA_ERROR_INVALID_STATE);
     }
     lua_close((lua_State *)L);
 }
 
-__attribute__((visibility("default"))) void lua_toggle_exit(void *L,
-                                                            int enabled) {
+void lua_toggle_exit(void *L, int enabled) {
     if (L == NULL) {
         ckb_exit(LUA_ERROR_INVALID_STATE);
     }
