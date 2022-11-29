@@ -518,7 +518,7 @@ void lua_toggle_exit(void *L, int enabled) {
 }
 
 __attribute__((visibility("default"))) int run_lua_code(const uint8_t *code, uint32_t code_size) {
-    const size_t mem_size = 1024 * 512;
+    const size_t mem_size = 1024 * 32;
     uint8_t mem[mem_size];
 
     void* l = lua_create_instance((uintptr_t)mem, (uintptr_t)(mem + mem_size));
